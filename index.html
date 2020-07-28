@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div class="jumbotron bg-light">
+<h1>
+    5 Day Weather Forecast
+</h1>
+    <div class="row">
+
+        <div class="col-3 border border-primary">
+            <br><!--added this just for some extra space may change later-->
+            <div class="input-group mb-3">
+                <input type="text" class="form-control citySearch" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Search by City">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-primary">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-9 container border border-primary">
+            <div class="bg-light">
+                <hr>
+                <h2 class="displayCity">City</h2><!--need to add moment.js to display date as well as future 5 day forecast dates-->
+                <hr>
+                <h4 class="displayTemp">Temperature:</h3>
+                <br>
+                <h4 class="displayHumidity">Humidity:</h3>
+                <br>
+                <h4 class="displayWind">Wind Speed:</h3>
+                <br>
+                <h4 class="displayUV">UV Index:</h3>
+                <hr>
+            </div> 
+
+            <div class="row justify-content-between">
+                <div class="col-md-2 offset-md-1 ml-0 p-0">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                          <h5 class="card-title">Card title</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <a href="#" class="card-link">Card link</a>
+                          <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 p-0">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                          <h5 class="card-title">Card title</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <a href="#" class="card-link">Card link</a>
+                          <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 p-0">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                          <h5 class="card-title">Card title</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <a href="#" class="card-link">Card link</a>
+                          <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 p-0">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                          <h5 class="card-title">Card title</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <a href="#" class="card-link">Card link</a>
+                          <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 p-0">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                          <h5 class="card-title">Card title</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <a href="#" class="card-link">Card link</a>
+                          <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+function searchCity(city) {
+    // This is our API key.
+    var APIKey = "463b4f43a0133b95bf482f83916a4272";//obtained from openweathermap.org using an account
+    // Here we are building the URL we need to query the database
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+    // We then created an AJAX call
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+        console.log(response);
+        console.log(response.name);
+        $(".displayCity").text(response.name);
+        $(".displayTemp").text("Temperature: " + response.main.temp);//will need to change this to fahrenheit
+        $(".displayHumidity").text("Humidity: " + response.main.humidity);
+        $(".displayWind").text("Wind Speed: " + response.wind.speed);
+        $(".displayUV").text("UV Index: " + response.name);//can't find the uv index in the object
+
+
+
+
+
+    });
+}
+
+
+    // Event handler for user clicking the .btn button
+  $(".btn").on("click", function(event) {
+    // Preventing the button from trying to submit the form
+    event.preventDefault();
+    // Storing the city name
+    var city = $(".citySearch").val().trim();
+    // Running the searchCity function(passing in the city as an argument)
+    searchCity(city);
+  });
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
