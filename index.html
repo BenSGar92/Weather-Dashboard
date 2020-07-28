@@ -22,6 +22,8 @@
                     <button type="button" class="btn btn-outline-primary">Search</button>
                 </div>
             </div>
+            <div class="append"></div>
+            <!--Here is where I want to make a column of buttons that save the city and can be re-clicked to check weather-->
         </div>
 
         <div class="col-9 container border border-primary">
@@ -45,57 +47,55 @@
                 <div class="col-md-2 offset-md-1 ml-0 p-0">
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
-                          <h5 class="card-title">Date</h5>
+                          <h5 class="card-title futureDate1">Date</h5>
                           <h6 class="card-subtitle mb-2 text-muted">Weather Icon</h6>
                           <p class="card-text">Temperature:</p>
-                          <p class="card-text">Humidity</p>                          
+                          <p class="card-text">Humidity:</p>                          
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 p-0">
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
-                          <h5 class="card-title">Date</h5>
+                          <h5 class="card-title futureDate2">Date</h5>
                           <h6 class="card-subtitle mb-2 text-muted">Weather Icon</h6>
                           <p class="card-text">Temperature:</p>
-                          <p class="card-text">Humidity</p>                    
+                          <p class="card-text">Humidity:</p>                    
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 p-0">
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
-                          <h5 class="card-title">Date</h5>
+                          <h5 class="card-title futureDate3">Date</h5>
                           <h6 class="card-subtitle mb-2 text-muted">Weather Icon</h6>
                           <p class="card-text">Temperature:</p>
-                          <p class="card-text">Humidity</p>                         
+                          <p class="card-text">Humidity:</p>                         
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 p-0">
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
-                          <h5 class="card-title">Date</h5>
+                          <h5 class="card-title futureDate4">Date</h5>
                           <h6 class="card-subtitle mb-2 text-muted">Weather Icon</h6>
                           <p class="card-text">Temperature:</p>
-                          <p class="card-text">Humidity</p>                         
+                          <p class="card-text">Humidity:</p>                         
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 p-0">
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
-                          <h5 class="card-title">Date</h5>
+                          <h5 class="card-title futureDate5">Date</h5>
                           <h6 class="card-subtitle mb-2 text-muted">Weather Icon</h6>
                           <p class="card-text">Temperature:</p>
-                          <p class="card-text">Humidity</p>                          
+                          <p class="card-text">Humidity:</p>                          
                         </div>
                     </div>
                 </div>
-            </div>
-            
+            </div>            
         </div>
-
     </div>
 </div>
 
@@ -108,6 +108,22 @@ var m = moment();
 var t = m.format("dddd, MMMM Do YYYY"); 
 $(".date").text(t);
 
+
+//This is where the future date variables are calculated and added to the page
+var oneDay = moment().add(1, 'day');
+var twoDay = moment().add(2, 'day');
+var threeDay = moment().add(3, 'day');
+var fourDay = moment().add(4, 'day');
+var fiveDay = moment().add(5, 'day');
+$(".futureDate1").text(oneDay.format("MM/DD/YY"));
+$(".futureDate2").text(twoDay.format("MM/DD/YY"));
+$(".futureDate3").text(threeDay.format("MM/DD/YY"));
+$(".futureDate4").text(fourDay.format("MM/DD/YY"));
+$(".futureDate5").text(fiveDay.format("MM/DD/YY"));
+
+
+
+
 function searchCity(city) {
     // This is our API key.
     var APIKey = "463b4f43a0133b95bf482f83916a4272";//obtained from openweathermap.org using an account
@@ -118,15 +134,16 @@ function searchCity(city) {
       url: queryURL,
       method: "GET"
     }).then(function(response) {
+        console.log(response);
         //may want to restructure to have the responses saved to variables
         $(".displayCity").text(response.name);
-        $(".displayTemp").text("Temperature: " + response.main.temp);//will need to change this to fahrenheit
+        var K = response.main.temp;
+        F = (K - 273.15) * 1.80 + 32
+        $(".displayTemp").text("Temperature: " + F.toFixed(1) + " " + String.fromCharCode(176) + "F");//toFixed locks it to 2 decimal places
         $(".displayHumidity").text("Humidity: " + response.main.humidity);
-        $(".displayWind").text("Wind Speed: " + response.wind.speed);
+        var W = (response.wind.speed * 2.237)//changing meter/sec to mph
+        $(".displayWind").text("Wind Speed: " + W.toFixed(1) + " MPH");
         $(".displayUV").text("UV Index: " + response.name);//can't find the uv index in the object
-
-
-
 
 
     });
@@ -141,8 +158,25 @@ function searchCity(city) {
     var city = $(".citySearch").val().trim();
     // Running the searchCity function(passing in the city as an argument)
     searchCity(city);
+
+
+
+    //will save city to local storage and create a clickable button below the input field
+    var cityStored = $(this).parents(".col-3").find(".citySearch").val();
+    localStorage.setItem(1, cityStored);
+    $("<button>").text(localStorage.getItem(1)).appendTo(".append");
+    //I would like this button to stay below the input field upon closing the webpage
   });
 
+
+
+
+  
+  //need to append the city to a list and save it to local storage
+  //need to get the uv index which i cannot find
+  //need to get the forecast for the next 5 days
+  //will need to be able to add an icon for sun, clouds, sun/clouds, rain, snow
+  //want to make it so when enter is pressed the search button is executed
   </script>
 
 
