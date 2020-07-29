@@ -161,9 +161,20 @@ function searchCity(city) {
         var W = (response.wind.speed * 2.237)//changing meter/sec to mph
         $(".displayWind").text("Wind Speed: " + W.toFixed(1) + " MPH");
         $(".displayUV").text("UV Index: " + response.name);//can't find the uv index in the object
-
-
-    });
+        
+        
+        var lat = response.coord.lat;
+        var long = response.coord.lon;
+        var queryURL2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&appid=" + APIKey;
+    // We then created an AJAX call
+        $.ajax({
+        url: queryURL2,
+        method: "GET"
+        }).then(function(response) {
+            console.log(response);
+        })
+        "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={YOUR API KEY}"
+        });
 }
 
 
@@ -186,6 +197,7 @@ $(".btn").on("click", function(event) {
     localStorage.setItem("cities", JSON.stringify(cities));
     
     run();
+    // $(this).parents(".col-3").find(".citySearch").reset(); ATTEMPTING TO CLEAR THE INPUT FIELD NOT WORKING
 });
 
 
@@ -198,11 +210,11 @@ $(".append").on("click", "button", function(event) {
 })//why does this only work when page is re-loaded? need to get it to work when page is working
 
   
-  //need to append the city to a list and save it to local storage
+  
   //need to get the uv index which i cannot find
   //need to get the forecast for the next 5 days
   //will need to be able to add an icon for sun, clouds, sun/clouds, rain, snow
-  //want to make it so when enter is pressed the search button is executed
+  //want to make it so when enter is pressed the search button is executed...TRIED THIS BUT FORM GAVE ME ISSUE WITH PADDING
 
 
 
