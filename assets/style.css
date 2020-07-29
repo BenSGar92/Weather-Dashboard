@@ -16,3 +16,7 @@ body {
 .append button:hover {
     background-color: lightblue;
 }
+
+.icon0 {
+    float: right;
+}

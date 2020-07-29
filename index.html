@@ -31,7 +31,7 @@
                 <br>
                 <h7>Today's Weather</h7>
                 <hr>
-                <h2 class="displayCity">City</h2><!--need to add moment.js to display date as well as future 5 day forecast dates-->
+                <h2 class="displayCity">City</h2><img class="icon0">
                 <hr>
                 <h4 class="displayTemp">Temperature:</h3>
                 <br>
@@ -48,9 +48,9 @@
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                           <h5 class="card-title futureDate1">Date</h5>
-                          <h6 class="card-subtitle mb-2 text-muted">Weather Icon</h6>
-                          <p class="card-text">Temperature:</p>
-                          <p class="card-text">Humidity:</p>                          
+                          <img class="card-subtitle mb-2 text-muted icon1">
+                          <p class="card-text temp1">Temperature:</p>
+                          <p class="card-text hum1">Humidity:</p>                          
                         </div>
                     </div>
                 </div>
@@ -58,9 +58,9 @@
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                           <h5 class="card-title futureDate2">Date</h5>
-                          <h6 class="card-subtitle mb-2 text-muted">Weather Icon</h6>
-                          <p class="card-text">Temperature:</p>
-                          <p class="card-text">Humidity:</p>                    
+                          <img class="card-subtitle mb-2 text-muted icon2">
+                          <p class="card-text temp2">Temperature:</p>
+                          <p class="card-text hum2">Humidity:</p>                    
                         </div>
                     </div>
                 </div>
@@ -68,9 +68,9 @@
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                           <h5 class="card-title futureDate3">Date</h5>
-                          <h6 class="card-subtitle mb-2 text-muted">Weather Icon</h6>
-                          <p class="card-text">Temperature:</p>
-                          <p class="card-text">Humidity:</p>                         
+                          <img class="card-subtitle mb-2 text-muted icon3">
+                          <p class="card-text temp3">Temperature:</p>
+                          <p class="card-text hum3">Humidity:</p>                         
                         </div>
                     </div>
                 </div>
@@ -78,9 +78,9 @@
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                           <h5 class="card-title futureDate4">Date</h5>
-                          <h6 class="card-subtitle mb-2 text-muted">Weather Icon</h6>
-                          <p class="card-text">Temperature:</p>
-                          <p class="card-text">Humidity:</p>                         
+                          <img class="card-subtitle mb-2 text-muted icon4">
+                          <p class="card-text temp4">Temperature:</p>
+                          <p class="card-text hum4">Humidity:</p>                         
                         </div>
                     </div>
                 </div>
@@ -88,9 +88,9 @@
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                           <h5 class="card-title futureDate5">Date</h5>
-                          <h6 class="card-subtitle mb-2 text-muted">Weather Icon</h6>
-                          <p class="card-text">Temperature:</p>
-                          <p class="card-text">Humidity:</p>                          
+                          <img class="card-subtitle mb-2 text-muted icon5">
+                          <p class="card-text temp5">Temperature:</p>
+                          <p class="card-text hum5">Humidity:</p>                          
                         </div>
                     </div>
                 </div>
@@ -171,9 +171,33 @@ function searchCity(city) {
         url: queryURL2,
         method: "GET"
         }).then(function(response) {
-            console.log(response);
-        })
-        "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={YOUR API KEY}"
+            console.log(response);//remove this later
+            
+            //here the icons for the weather will be queried
+            $(".icon0").attr("src", "http://openweathermap.org/img/wn/" + response.daily[0].weather[0].icon + "@4x.png");
+            $(".icon1").attr("src", "http://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + "@2x.png");
+            $(".icon2").attr("src", "http://openweathermap.org/img/wn/" + response.daily[2].weather[0].icon + "@2x.png");
+            $(".icon3").attr("src", "http://openweathermap.org/img/wn/" + response.daily[3].weather[0].icon + "@2x.png");
+            $(".icon4").attr("src", "http://openweathermap.org/img/wn/" + response.daily[4].weather[0].icon + "@2x.png");
+            $(".icon5").attr("src", "http://openweathermap.org/img/wn/" + response.daily[5].weather[0].icon + "@2x.png");
+
+            //here the temperature will be queried for the 5 day forecast
+            $(".temp1").text("Temperature: " + (((response.daily[1].temp.day) - 273.15) * 1.80 + 32).toFixed(1) + " " + String.fromCharCode(176) + "F")
+            $(".temp2").text("Temperature: " + (((response.daily[2].temp.day) - 273.15) * 1.80 + 32).toFixed(1) + " " + String.fromCharCode(176) + "F")
+            $(".temp3").text("Temperature: " + (((response.daily[3].temp.day) - 273.15) * 1.80 + 32).toFixed(1) + " " + String.fromCharCode(176) + "F")
+            $(".temp4").text("Temperature: " + (((response.daily[4].temp.day) - 273.15) * 1.80 + 32).toFixed(1) + " " + String.fromCharCode(176) + "F")
+            $(".temp5").text("Temperature: " + (((response.daily[5].temp.day) - 273.15) * 1.80 + 32).toFixed(1) + " " + String.fromCharCode(176) + "F")
+
+            //here the humidit will be queried
+            $(".hum1").text("Humidity: " + (response.daily[1].humidity));
+            $(".hum2").text("Humidity: " + (response.daily[2].humidity));
+            $(".hum3").text("Humidity: " + (response.daily[3].humidity));
+            $(".hum4").text("Humidity: " + (response.daily[4].humidity));
+            $(".hum5").text("Humidity: " + (response.daily[5].humidity));
+
+            //UV index query
+            $(".displayUV").text("UV index: " + (response.daily[0].uvi));
+            });
         });
 }
 
