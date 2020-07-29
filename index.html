@@ -19,7 +19,7 @@
             <div class="input-group mb-3">
                 <input type="text" class="form-control citySearch" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Search by City">
                 <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary">Search</button>
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
                 </div>
             </div>
             <div class="append"></div>
@@ -109,6 +109,23 @@ var t = m.format("dddd, MMMM Do YYYY");
 $(".date").text(t);
 
 
+var cities = JSON.parse(localStorage.getItem("cities"));
+run();
+function run() {
+    $(".append").empty();
+    if (cities !== null) {    
+        for (var i = 0; i < cities.length; i++) {
+            $("<button>").text(cities[i]).appendTo(".append");
+        }
+    }
+}
+
+
+
+
+
+
+
 //This is where the future date variables are calculated and added to the page
 var oneDay = moment().add(1, 'day');
 var twoDay = moment().add(2, 'day');
@@ -151,7 +168,7 @@ function searchCity(city) {
 
 
     // Event handler for user clicking the .btn button
-  $(".btn").on("click", function(event) {
+$(".btn").on("click", function(event) {
     // Preventing the button from trying to submit the form
     event.preventDefault();
     // Storing the city name
@@ -159,17 +176,26 @@ function searchCity(city) {
     // Running the searchCity function(passing in the city as an argument)
     searchCity(city);
 
-
-
     //will save city to local storage and create a clickable button below the input field
+    if (cities == null) {
+        cities = [];
+    }
+
     var cityStored = $(this).parents(".col-3").find(".citySearch").val();
-    localStorage.setItem(1, cityStored);
-    $("<button>").text(localStorage.getItem(1)).appendTo(".append");
-    //I would like this button to stay below the input field upon closing the webpage
-  });
+    cities.push(cityStored);
+    localStorage.setItem("cities", JSON.stringify(cities));
+    
+    run();
+});
 
 
-
+//attempting to make my dynamically created buttons clickable to show the weather for those saved cities
+//anytime you click on the parent it will look for the child classes/button/whatever
+$(".append").on("click", "button", function(event) {
+    event.preventDefault();
+    var cityBtn = $(this).text();
+    searchCity(cityBtn);
+})//why does this only work when page is re-loaded? need to get it to work when page is working
 
   
   //need to append the city to a list and save it to local storage
@@ -177,6 +203,11 @@ function searchCity(city) {
   //need to get the forecast for the next 5 days
   //will need to be able to add an icon for sun, clouds, sun/clouds, rain, snow
   //want to make it so when enter is pressed the search button is executed
+
+
+
+
+  //NEXT: I need to get the 5 day API key and utilize lat and long from original api key to get the 5 day forecast and the UV index
   </script>
 
 

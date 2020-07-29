@@ -9,4 +9,10 @@ body {
 .append button {
     background-color: white;
     text-transform: capitalize;
+    width: 100%;
+    
+}
+
+.append button:hover {
+    background-color: lightblue;
 }
