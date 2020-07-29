@@ -175,12 +175,12 @@ function searchCity(city) {
             console.log(response);//remove this later
             
             //here the icons for the weather will be queried
-            $(".icon0").attr("src", "http://openweathermap.org/img/wn/" + response.daily[0].weather[0].icon + "@4x.png");
-            $(".icon1").attr("src", "http://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + "@2x.png");
-            $(".icon2").attr("src", "http://openweathermap.org/img/wn/" + response.daily[2].weather[0].icon + "@2x.png");
-            $(".icon3").attr("src", "http://openweathermap.org/img/wn/" + response.daily[3].weather[0].icon + "@2x.png");
-            $(".icon4").attr("src", "http://openweathermap.org/img/wn/" + response.daily[4].weather[0].icon + "@2x.png");
-            $(".icon5").attr("src", "http://openweathermap.org/img/wn/" + response.daily[5].weather[0].icon + "@2x.png");
+            $(".icon0").attr("src", "https://openweathermap.org/img/wn/" + response.daily[0].weather[0].icon + "@4x.png");
+            $(".icon1").attr("src", "https://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + "@2x.png");
+            $(".icon2").attr("src", "https://openweathermap.org/img/wn/" + response.daily[2].weather[0].icon + "@2x.png");
+            $(".icon3").attr("src", "https://openweathermap.org/img/wn/" + response.daily[3].weather[0].icon + "@2x.png");
+            $(".icon4").attr("src", "https://openweathermap.org/img/wn/" + response.daily[4].weather[0].icon + "@2x.png");
+            $(".icon5").attr("src", "https://openweathermap.org/img/wn/" + response.daily[5].weather[0].icon + "@2x.png");
 
             //here the temperature will be queried for the 5 day forecast
             $(".temp1").text("Temperature: " + (((response.daily[1].temp.day) - 273.15) * 1.80 + 32).toFixed(1) + " " + String.fromCharCode(176) + "F")
