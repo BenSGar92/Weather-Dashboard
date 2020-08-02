@@ -10,11 +10,13 @@ body {
     background-color: white;
     text-transform: capitalize;
     width: 100%;
-    
+    border-color: blue;
+    margin-top: .5rem;
 }
 
 .append button:hover {
-    background-color: lightblue;
+    background-color: gray;
+    color: blue;
 }
 
 .icon0 {

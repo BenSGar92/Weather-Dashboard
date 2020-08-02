@@ -71,7 +71,7 @@
                           <h5 class="card-title futureDate3">Date</h5>
                           <img class="card-subtitle mb-2 text-muted icon3">
                           <p class="card-text temp3">Temperature:</p>
-                          <p class="card-text hum3">Humidity:</p>                         
+                          <p class="card-text hum3">Humidity:</p>
                         </div>
                     </div>
                 </div>
@@ -114,12 +114,12 @@ var cities = JSON.parse(localStorage.getItem("cities"));
 run();
 function run() {
     $(".append").empty();
-    if (cities !== null) {    
+    if (cities !== null) {
         for (var i = 0; i < cities.length; i++) {
             $("<button>").text(cities[i]).appendTo(".append");
-        }
-    }
-}
+        };
+    };
+};
 
 
 
@@ -161,7 +161,6 @@ function searchCity(city) {
         $(".displayHumidity").text("Humidity: " + response.main.humidity);
         var W = (response.wind.speed * 2.237)//changing meter/sec to mph
         $(".displayWind").text("Wind Speed: " + W.toFixed(1) + " MPH");
-        $(".displayUV").text("UV Index: " + response.name);//can't find the uv index in the object
         
         
         var lat = response.coord.lat;
@@ -188,7 +187,7 @@ function searchCity(city) {
             $(".temp3").text("Temperature: " + (((response.daily[3].temp.day) - 273.15) * 1.80 + 32).toFixed(1) + " " + String.fromCharCode(176) + "F")
             $(".temp4").text("Temperature: " + (((response.daily[4].temp.day) - 273.15) * 1.80 + 32).toFixed(1) + " " + String.fromCharCode(176) + "F")
             $(".temp5").text("Temperature: " + (((response.daily[5].temp.day) - 273.15) * 1.80 + 32).toFixed(1) + " " + String.fromCharCode(176) + "F")
-
+            console.log(response.daily[5].temp.day);
             //here the humidit will be queried
             $(".hum1").text("Humidity: " + (response.daily[1].humidity));
             $(".hum2").text("Humidity: " + (response.daily[2].humidity));
@@ -212,34 +211,27 @@ $(".btn").on("click", function(event) {
     // Running the searchCity function(passing in the city as an argument)
     searchCity(city);
 
-    //will save city to local storage and create a clickable button below the input field
+    
     if (cities == null) {
         cities = [];
     }
-
+    //will save city to local storage and create a clickable button below the input field
     var cityStored = $(this).parents(".col-3").find(".citySearch").val();
     cities.push(cityStored);
+    
     localStorage.setItem("cities", JSON.stringify(cities));
     $(".citySearch").val("");
     run();
-    // $(this).parents(".col-3").find(".citySearch").reset(); ATTEMPTING TO CLEAR THE INPUT FIELD NOT WORKING
 });
 
 
 //attempting to make my dynamically created buttons clickable to show the weather for those saved cities
-//anytime you click on the parent it will look for the child classes/button/whatever
+//anytime you click on the parent it will look for the child classes
 $(".append").on("click", "button", function(event) {
     event.preventDefault();
     var cityBtn = $(this).text();
     searchCity(cityBtn);
-})//why does this only work when page is re-loaded? need to get it to work when page is working
-
-  
-  
-  //need to get the uv index which i cannot find
-  //need to get the forecast for the next 5 days
-  //will need to be able to add an icon for sun, clouds, sun/clouds, rain, snow
-  //want to make it so when enter is pressed the search button is executed...TRIED THIS BUT FORM GAVE ME ISSUE WITH PADDING
+});
 
 
 
