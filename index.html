@@ -152,7 +152,7 @@ function searchCity(city) {
       url: queryURL,
       method: "GET"
     }).then(function(response) {
-        console.log(response);
+        
         //may want to restructure to have the responses saved to variables
         $(".displayCity").text(response.name);
         var K = response.main.temp;
@@ -171,7 +171,7 @@ function searchCity(city) {
         url: queryURL2,
         method: "GET"
         }).then(function(response) {
-            console.log(response);//remove this later
+            
             
             //here the icons for the weather will be queried
             $(".icon0").attr("src", "https://openweathermap.org/img/wn/" + response.daily[0].weather[0].icon + "@4x.png");
